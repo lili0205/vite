@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 第一步：引用vue3.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <!-- 第二步挂载范围 -->
+    <div id="container">
+        <h3>Hello vue.js-------{{count}}</h3>
+    </div>
+    <script>
+        // 第三步创建vue实例
+        const App = {
+            data() {
+                return {
+                    count: 100
+                }
+            },
+        }
+
+        // 创建app应用返回相应的实例对象，调用mount方法进行挂载，挂载到#counter节点上去
+        // Vue.createApp(App).mount('#container')
+
+        const app = Vue.createApp(App)
+        app.mount("#container")
+    </script>
+</body>
+
+</html>
