@@ -26,6 +26,21 @@ const routes = [
     name: "for",
     component: () => import("./../components/for.vue"),
   },
+  {
+    path: "/click",
+    name: "click",
+    component: () => import("./../components/click.vue"),
+  },
+  {
+    path: "/button",
+    name: "button",
+    component: () => import("./../components/button.vue"),
+  },
+  {
+    path: "/computed",
+    name: "computed",
+    component: () => import("./../components/computed.vue"),
+  },
 ];
 
 const router = createRouter({
