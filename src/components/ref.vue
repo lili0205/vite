@@ -9,6 +9,10 @@
       <li>我是第4个li</li>
       <li>我是第5个li</li>
     </ul>
+    <div>
+      <p>获取当前坐标的x：{{ mousePoint.x }}</p>
+      <p>获取当前坐标的y：{{ mousePoint.y }}</p>
+    </div>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ export default {
 };
 </script>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted, reactive } from "vue";
 // ref操作单个元素
 const box = ref(null);
 onMounted(() => {
@@ -37,6 +41,24 @@ const setdom = (el) => {
 };
 onMounted(() => {
   setdomlist.forEach((el) => (el.style.color = "pink"));
+});
+
+const mousePoint = reactive({
+  x: 0,
+  y: 0,
+});
+const move = (e) => {
+  mousePoint.x = e.pageX;
+  mousePoint.y = e.pageY;
+};
+// 在页面加载完成之后，dom渲染完成以后，监听事件
+onMounted(() => {
+  document.addEventListener("mousemove", move);
+});
+// 组件卸载后删除监听事件
+// 组件卸载需要触发一个生命周期
+onUnmounted(() => {
+  document.removeEventListener("mousemove");
 });
 </script>
 <style lang="less" scoped></style>

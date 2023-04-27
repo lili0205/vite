@@ -61,6 +61,11 @@ const routes = [
     name: "ref",
     component: () => import("./../components/ref.vue"),
   },
+  {
+    path: "/loop",
+    name: "loop",
+    component: () => import("./../components/loop.vue"),
+  },
 ];
 
 const router = createRouter({
