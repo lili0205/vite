@@ -1,63 +1,92 @@
 <template>
   <div>
     <h3>computed计算属性</h3>
-    <input type="text" v-model="num1" />+ <input type="text" v-model="num2" />=
-    <!-- <input type="text" v-model="total" /> -->
-    <span>{{ num1 + "-" + num2 }}</span>
-    <hr />
-    <div id="example">
-      <p>给定以下三个词语组成一句话</p>
-      <span>{{ nameOne }}</span>
-      <span>{{ nameTwo }}</span>
-      <span>{{ son }}</span>
-      <p style="padding: 12px 0">答案为：{{ result }}</p>
-      <button @click="btnClick">改变语句</button>
-    </div>
+    <table border="1" style="width: 500px">
+      <tr>
+        <th>
+          <input type="checkbox" v-model="allCheck" />
+          全选
+        </th>
+        <th>商品数量</th>
+        <th>商品名称</th>
+        <th>商品价格</th>
+      </tr>
+      <tr v-for="item in list" :key="item.id">
+        <td>
+          <input type="checkbox" v-model="item.ischeck" />
+        </td>
+        <td>{{ item.num }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+      </tr>
+      <tr>
+        <td>总计</td>
+        <!-- 横跨几行 -->
+        <td colspan="3">{{ total }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
 export default {
   name: "Pro02Computed",
-  data() {
-    return {
-      nameOne: "父亲",
-      nameTwo: "母亲",
-      son: "儿子",
-    };
-  },
-  computed: {
-    result: {
-      // 与不写get  set方法的形式有区别
-      // 一个计算属性的getter
-      get: function () {
-        // 三个值变化的时候，result的值会自动更新，也会自动更新DOM结构
-        return this.nameOne + this.nameTwo + this.son;
-      },
-      // 一个计算属性的setter
-      set: function (newVal) {
-        // 当设置result的时候，其他的值也会相应的发生改变
-        this.nameOne = newVal.substr(0, 2);
-        this.nameTwo = newVal.substr(2, 2);
-        this.son = newVal.substr(4);
-      },
-    },
-  },
-  methods: {
-    btnClick() {
-      this.result = "儿子外出打工";
-    },
-  },
 };
 </script>
 <script setup>
-import { ref } from "vue";
-const num1 = ref("123");
-const num2 = ref("456");
-// const total = num1.value + "-" + num2.value;
-// num1.value = newArr[0];
-// num2.value = newArr[1];
-// get
-// set
+import { reactive, computed } from "vue";
+const { list } = reactive({
+  list: [
+    {
+      id: 1001,
+      name: "蒙牛",
+      num: 10,
+      price: 3.0,
+      ischeck: true,
+    },
+    {
+      id: 1002,
+      name: "伊利",
+      num: 120,
+      price: 3.0,
+      ischeck: true,
+    },
+    {
+      id: 1003,
+      name: "新希望",
+      num: 110,
+      price: 3.0,
+      ischeck: false,
+    },
+  ],
+});
+// const allCheck = ref(false);
+
+// (el) => el.ischeck == true   (el)代表循环的每一项,el.ischeck代表每一项的哪个值， ==true表示满足什么条件
+const allCheck = computed({
+  get() {
+    return list.every((el) => el.ischeck == true);
+  },
+  set(value) {
+    list.forEach((el) => (el.ischeck = value));
+  },
+});
+// computed的简写形式
+// 简写形式下computed 默认是get,所以前面要加return
+// 方法 reduce(cur,val) cur是初始值，val是每一项的值
+const total = computed(() => {
+  return list.reduce((cur, val) => {
+    if (val.ischeck == true) {
+      return cur + val.price * val.num;
+    } else {
+      return cur;
+    }
+  }, 0);
+});
 </script>
-<style lang="less" scoped></style>
+
+<style lang="less" scoped>
+table {
+  text-align: center;
+}
+</style>

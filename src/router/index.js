@@ -41,6 +41,26 @@ const routes = [
     name: "computed",
     component: () => import("./../components/computed.vue"),
   },
+  {
+    path: "/todos",
+    name: "todos",
+    component: () => import("./../components/todos.vue"),
+  },
+  {
+    path: "/lifecycle",
+    name: "lifecycle",
+    component: () => import("./../components/lifeCycle.vue"),
+  },
+  {
+    path: "/lifecycle3",
+    name: "lifecycle3",
+    component: () => import("./../components/lifecycle3.vue"),
+  },
+  {
+    path: "/ref",
+    name: "ref",
+    component: () => import("./../components/ref.vue"),
+  },
 ];
 
 const router = createRouter({
